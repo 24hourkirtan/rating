@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+USED ICONS FROM https://fortawesome.github.io/Font-Awesome/
+-->
+<RATINGS>
+	<RATING NAME="Overall Rating" COUNT="5" ICON="fa fa-star" ICONSIZE="80" EMPTYCOLOR="#ccf5fd" OVERCOLOR="#33737F" SETCOLOR="#193940" FONTCOLOR="#193940" />
+	<RATING NAME="Audio Quality" COUNT="5" ICON="fa fa-star" ICONSIZE="40" EMPTYCOLOR="#ffecdf" OVERCOLOR="#BF5531" SETCOLOR="#7F3921" FONTCOLOR="#7F3921" />
+	<RATING NAME="Musical Expertise" COUNT="5" ICON="fa fa-star" ICONSIZE="20" EMPTYCOLOR="#f8eedc" OVERCOLOR="#5E861D" SETCOLOR="#253B00" FONTCOLOR="#253B00" />
+</RATINGS>
