@@ -1,5 +1,5 @@
 /*
- * Native Flashradio Rating V1.16.03.08
+ * Native Flashradio Rating V1.16.03.11
  * https://github.com/24hourkirtan/rating
  *
  *
@@ -119,7 +119,6 @@
 			
             if (settings_streamurl != undefined && settings_streamurl != ""){
                 settings_streamurl = scriptSource + "currentsong.php?url=" + addhttp(settings_streamurl);
-                console.log(settings_streamurl);
                 load_settings();
             } else {
                 container = document.getElementById(divname);
@@ -182,7 +181,22 @@
 			    container.innerHTML = "ERROR - MISSING XML FILE NAME";
             }
 		}
-
+        
+        //###############################################################################
+		//SAVE RATING
+		//###############################################################################
+		function saveRATING(rating_name, rating_value) {
+			//console.log(song_current, rating_name, rating_value);
+            $.ajax({
+                method: "POST",
+                url: scriptSource + "rating.php",
+                data: { song: song_current, name: rating_name, set: rating_value }
+            })
+            .done(function( msg ) {
+                //console.log("saved" + msg);
+            });
+        }
+        
 		//###############################################################################
 		//INITIAL DIV
 		//###############################################################################
@@ -242,6 +256,7 @@
 				ratingDIV.onclick = function(ev) {
                     $(this).parent().data("rating", $(this).data("ratingnumber"));
                     clickRATING($(this).data("ratingsid"), $(this).data("ratingnumber"));
+                    saveRATING(rating_name[$(this).data("ratingsid")], $(this).data("ratingnumber"));
 					return false;
 				};
 			}
@@ -317,7 +332,7 @@
                 if (song_current != data) {
                     song_current = data;
                     resetRATING();
-                    console.log(song_current);
+                    //console.log(song_current);
                 }
             })
             .done(function() { 
