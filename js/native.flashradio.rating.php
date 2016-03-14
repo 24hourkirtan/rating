@@ -1,11 +1,13 @@
 <?php
 /*
- * Native Flashradio Rating V1.16.03.14
+ * Native Flashradio Rating Plugin V1.16.03.14
  * https://github.com/24hourkirtan/rating
  *
+ * required Native Flashradio V3 
+ * native.flashradio.info
  *
  * Copyright (C) SODAH | JOERG KRUEGER
- * http://www.sodah.de | http://native.flashradio.info
+ * http://www.sodah.de | http://rating.flashradio.info
  * 
  */
 

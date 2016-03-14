@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!--
-USED ICONS FROM https://fortawesome.github.io/Font-Awesome/
+	Native Flashradio Rating Plugin V1.16.03.14
+	https://github.com/24hourkirtan/rating
+
+	required Native Flashradio V3 
+ 	native.flashradio.info
+ 	
+ 	ICON name from Font-Awesome 
+ 	https://fortawesome.github.io/Font-Awesome/
+ 
+ 	Copyright (C) SODAH | JOERG KRUEGER
+ 	http://www.sodah.de | http://rating.flashradio.info
 -->
 <RATINGS>
 	<RATING NAME="Overall Rating" COUNT="5" ICON="fa fa-star" ICONSIZE="80" EMPTYCOLOR="#ccf5fd" OVERCOLOR="#33737F" SETCOLOR="#193940" FONTCOLOR="#193940" />
