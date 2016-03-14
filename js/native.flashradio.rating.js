@@ -1,5 +1,5 @@
 /*
- * Native Flashradio Rating V1.16.03.11
+ * Native Flashradio Rating V1.16.03.14
  * https://github.com/24hourkirtan/rating
  *
  *
@@ -78,9 +78,9 @@
 		}		
 
 		//Settings
-		var settings_xml = options.settings;
 		var settings_loadinterval = options.loadinterval;
 		var settings_streamurl = options.streamurl;
+		var settings_scriptfolder = options.scriptfolder;
 
 		//Container
 		var divname;
@@ -102,8 +102,13 @@
 		var song_timer;
         var songinformationinterval = 20000;
         
-        var scriptSource = urlofdoc("native.flashradio.rating.js");
-        
+        var scriptSource = "";
+        if (settings_scriptfolder != undefined && settings_scriptfolder != ""){
+        	scriptSource = settings_scriptfolder;
+        } else {
+        	scriptSource = urlofdoc("native.flashradio.rating.js");
+        }
+
 		$(document).ready(function() {
 			ini(idname);
 		});
@@ -146,40 +151,35 @@
 		//LOAD SETTINGS FROM XML
 		//###############################################################################
 		function load_settings() {
-			if (settings_xml != undefined) {
-				var jqxhr = $.get(settings_xml + "?hash="+Math.random(), function(d) {
-					$(d).find('RATING').each(function(){
-						if ($(this).attr("NAME") && $(this).attr("NAME") != "") {
-							rating_set.push(0);							
-							rating_name.push($(this).attr("NAME"));
-							rating_count.push($(this).attr("COUNT"));
-							rating_icon.push($(this).attr("ICON"));
-                            rating_iconsize.push($(this).attr("ICONSIZE"));
-							rating_emptycolor.push($(this).attr("EMPTYCOLOR"));
-							rating_setcolor.push($(this).attr("SETCOLOR"));
-							rating_overcolor.push($(this).attr("OVERCOLOR"));
-							rating_fontcolor.push($(this).attr("FONTCOLOR"));
-						}
-					})
-					iniDIV();
+			var jqxhr = $.get(scriptSource + "native.flashradio.rating.settings.xml?hash="+Math.random(), function(d) {
+				$(d).find('RATING').each(function(){
+					if ($(this).attr("NAME") && $(this).attr("NAME") != "") {
+						rating_set.push(0);							
+						rating_name.push($(this).attr("NAME"));
+						rating_count.push($(this).attr("COUNT"));
+						rating_icon.push($(this).attr("ICON"));
+                        rating_iconsize.push($(this).attr("ICONSIZE"));
+						rating_emptycolor.push($(this).attr("EMPTYCOLOR"));
+						rating_setcolor.push($(this).attr("SETCOLOR"));
+						rating_overcolor.push($(this).attr("OVERCOLOR"));
+						rating_fontcolor.push($(this).attr("FONTCOLOR"));
+					}
 				})
-				.done(function() { 
-					//console.log("second success"); 
-				})
-				.fail(function() { 
-					container = document.getElementById(divname);
-			        container.innerHTML = "ERROR - XML FILE NOT FOUND";
-				})
-				.always(function() { 
-					//console.log("finished"); 
-				});
-				jqxhr.always(function(){ 
-					//console.log("second finished"); 
-				});
-			} else {
-                container = document.getElementById(divname);
-			    container.innerHTML = "ERROR - MISSING XML FILE NAME";
-            }
+				iniDIV();
+			})
+			.done(function() { 
+				//console.log("second success"); 
+			})
+			.fail(function() { 
+				container = document.getElementById(divname);
+		        container.innerHTML = "ERROR - XML FILE NOT FOUND";
+			})
+			.always(function() { 
+				//console.log("finished"); 
+			});
+			jqxhr.always(function(){ 
+				//console.log("second finished"); 
+			});
 		}
         
         //###############################################################################
@@ -189,11 +189,11 @@
 			//console.log(song_current, rating_name, rating_value);
             $.ajax({
                 method: "POST",
-                url: scriptSource + "rating.php",
+                url: scriptSource + "native.flashradio.rating.php",
                 data: { song: song_current, name: rating_name, set: rating_value }
             })
             .done(function( msg ) {
-                //console.log("saved" + msg);
+                //console.log("saved - " + msg);
             });
         }
         
@@ -328,6 +328,7 @@
 		//LOAD SONG
 		//###############################################################################
 		function song_load() {
+			//console.log(settings_streamurl);
             var jqxhr = $.get(settings_streamurl, function(data) {										
                 if (song_current != data) {
                     song_current = data;

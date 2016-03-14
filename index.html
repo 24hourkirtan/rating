@@ -13,9 +13,7 @@
     
 </head>
 <body>
-<div id="flashradio" style="height:50px; width:400px;">
-Native Flashradio V3
-</div>
+
 <div id="myrating" style="font-family: 'Roboto', sans-serif;">
     Wenn nix geht, steht das hier drin :)
 </div>
@@ -23,7 +21,7 @@ Native Flashradio V3
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript" src="js/native.flashradio.rating.js"></script>
 <script type="text/javascript">
-    $("#myrating").flashradiorating({settings: "flashradiorating.xml", loadinterval: "20000", streamurl: "http://icecast.24hourkirtan.fm:8000"});
+    $("#myrating").flashradiorating({scriptfolder: "js/", loadinterval: "20000", streamurl: "http://204.45.126.170:8226"});
 </script>
 
 </body>

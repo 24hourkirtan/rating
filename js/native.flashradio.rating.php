@@ -1,6 +1,18 @@
 <?php
+/*
+ * Native Flashradio Rating V1.16.03.14
+ * https://github.com/24hourkirtan/rating
+ *
+ *
+ * Copyright (C) SODAH | JOERG KRUEGER
+ * http://www.sodah.de | http://native.flashradio.info
+ * 
+ */
+
 //xml database file
-$xmlFile = 'ratings.xml'; 
+$xmlFile = 'native.flashradio.ratings.xml';
+//settings file
+$settings = 'native.flashradio.rating.settings.xml';
 
 //generate unique user fingerprint
 if (! isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
@@ -13,14 +25,39 @@ if (isset ($_POST['song']) && isset ($_POST['name']) && isset ($_POST['set'])):
     $song = $_POST['song'];
     $name = $_POST['name'];
     $set = $_POST['set'];
-    
-    if (file_exists($xmlFile)):
-        update_xml($user, $song, $name, $set, $xmlFile);
+    if (file_exists($settings)):
+        if (validate_values($song, $name, $set, $settings)):
+            if (file_exists($xmlFile)):
+                update_xml($user, $song, $name, $set, $xmlFile);
+                echo "update";
+            else:
+                create_xml($user, $song, $name, $set, $xmlFile);
+                echo "create";
+            endif;
+        else:
+            echo "not valid";
+        endif;
     else:
-        create_xml($user, $song, $name, $set, $xmlFile);
+        echo "settings not found";
     endif;
 endif;
 
+function validate_values($song, $name, $set, $settings){
+    $found = false;
+    $xml = new DOMDocument( '1.0', 'utf-8' );
+    $xml->preserveWhiteSpace = true;
+    $xml->load($settings);
+    $xml->formatOutput = true;
+    foreach($xml->getElementsByTagName('RATING') as $item) {
+        if ($item->getAttribute('NAME') == $name && intval($set) <= intval($item->getAttribute('COUNT')) && intval($set) >= 0):
+            $found = true;
+        endif;
+    }
+    if ($song == ""):
+        $found = false;
+    endif;
+    return $found;
+}
 
 //<rating user="xcsdfs2342dsfs" song="tralala" name="Overall Rating" set="5" />
 function create_xml($user, $song, $name, $set, $xmlFile){
