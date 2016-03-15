@@ -100,11 +100,11 @@ function addnode_xml($xml, $user, $song, $name, $set, $xmlFile){
     $rating->appendChild($domUser);
     
     $domSong = $xml->createAttribute('song');
-    $domSong->value = $song;
+    $domSong->value = htmlspecialchars($song, ENT_QUOTES,"ISO-8859-1");
     $rating->appendChild($domSong);
     
     $domName = $xml->createAttribute('name');
-    $domName->value = $name;
+    $domName->value = htmlspecialchars($name, ENT_QUOTES,"ISO-8859-1");
     $rating->appendChild($domName);
     
     $domSet = $xml->createAttribute('set');
